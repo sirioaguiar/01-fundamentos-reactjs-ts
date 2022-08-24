@@ -1,32 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Header } from "./components/Header/Header";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Post } from "./components/Post/Post";
+
+
+import styles from "./App.module.css";
+import "./global.css";
+
+const posts = [
+  {
+    id: 1,
+    author :{
+      avatarUrl: 'https://github.com/sirioaguiar.png',
+      name: 'Sírio Aguiar',
+      role: 'Developer'
+    },
+    content: [
+      { type: 'paragraph', content: 'Post1  de exemplo do feed'},
+      { type: 'paragraph', content: 'linha2 do post1'},
+      { type: 'link', content: 'https://github.com/sirioaguiar'},
+    ],
+    publishedAt: new Date('2022-08-17 16:48:00')
+  },
+  {
+    id: 2,
+    author :{
+      avatarUrl: 'https://github.com/wagnermanko.png',
+      name: 'Wagner Mengue',
+      role: 'Developer'
+    },
+    content: [
+      { type: 'paragraph', content: 'Post2  de exemplo do feed'},
+      { type: 'paragraph', content: 'linha2 do post2'},
+      { type: 'link', content: 'https://github.com/wagnermanko'},
+    ],
+    publishedAt: new Date('2022-08-13 16:49:00')
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <Header />
+
+      <div className={styles.wrapper}>
+        <Sidebar />
+        <main>
+          {posts.map(post => {
+            return (
+              <Post 
+                key={post.id}
+                author={post.author}
+                publishedAt={post.publishedAt}
+                content={post.content}
+              />
+            )
+          }) }
+
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
